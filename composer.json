@@ -1,0 +1,29 @@
+{
+    "name": "samgreenwood/routeros-stumbler",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sam Greenwood",
+            "email": "sam@samgreenwood.me"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "RouterOsStumbler\\": "src/RouterOsStumbler"
+        }
+    },
+    "require": {
+        "php": ">=5.4",
+        "ext/php-sqlite": "*",
+        "pear2/net_routeros": "dev-master",
+        "symfony/yaml": "~2.6",
+        "slim/slim": "~2.6",
+        "vlucas/spot2": "~2.1"
+
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.6"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

@@ -1,0 +1,4 @@
+config:
+  host: hostname
+  username: username
+  password: password
