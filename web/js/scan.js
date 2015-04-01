@@ -1,6 +1,5 @@
 $(document).ready(function()
 {
-
     function stumble() {
 
         var scanUrl = "/api/scan";

@@ -1,5 +1,7 @@
 <?php
 
+use RouterOsStumbler\Site;
+
 $app->get('/', function () use ($app) {
 
     $sites = [];
@@ -8,17 +10,21 @@ $app->get('/', function () use ($app) {
 
 });
 
-$app->get('/scan', function() use ($app)
+$app->get('/scan/:siteId', function($siteName) use ($app)
 {
-    return $app->render('scan.php');
+    $site = new Site($siteName);
+    $survey = new Survey($site);
+
+    return $app->render('scan.php', ['site' => $site, 'survey' => $survey]);
 });
 
 $app->get('/api/scan', function() use ($app, $routerboardScanResultReader)
 {
-    $scans = $routerboardScanResultReader->read();
+
+    $scanResults = $routerboardScanResultReader->read();
 
     $response = $app->response();
-    $response->setBody(json_encode($scans));
+    $response->setBody(json_encode($scanResults));
 
     return $response;
 

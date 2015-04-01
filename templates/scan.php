@@ -49,6 +49,7 @@
 <div class="container">
 
     <div class="starter-template">
+        <h1>Survey for <?=$site->getName()?></h1>
       <table class="table table-bordered-table striped" id="scans-table">
           <thead>
             <tr>
