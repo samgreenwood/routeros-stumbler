@@ -1,8 +1,8 @@
 <?php namespace RouterOsStumbler\Services;
 
 use PEAR2\Net\RouterOS;
-use RouterOsStumbler\Routerboard;
-use RouterOsStumbler\ScanResult;
+use RouterOsStumbler\Entity\Routerboard;
+use RouterOsStumbler\Entity\ScanResult;
 
 class RouterBoardScanResultReader
 {

@@ -1,21 +1,34 @@
-<?php namespace RouterOsStumbler;
+<?php namespace RouterOsStumbler\Entity;
 
+use Doctrine\ORM\Mapping;
+
+/**
+ * @Entity
+ * @Table(name="scanresults")
+ */
 class ScanResult implements \JsonSerializable
 {
     /**
-     * @var integer
+     * @Id
+     * @GeneratedValue
+     * @Column(type="integer")
      */
     protected $id;
 
     /**
-     * @var string
+     * @Column(type="string", nullable=true)
      */
     protected $ssid;
 
     /**
-     * @var integer
+     * @Column(type="integer", nullable=true)
      */
     protected $signalStrength;
+
+    /**
+     * @OneToMany(targetEntity="RouterOsStumbler\Entity\Survey", mappedBy="survey")
+     */
+    protected $survey;
 
     /**
      * @param $ssid

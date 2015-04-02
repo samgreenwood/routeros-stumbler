@@ -17,7 +17,9 @@
         "pear2/net_routeros": "dev-master",
         "symfony/yaml": "~2.6",
         "slim/slim": "~2.6",
-        "aura/marshal": "~1.2"
+        "aura/marshal": "~1.2",
+        "aura/sqlmapper-bundle": "2.0.x-dev",
+        "doctrine/orm": "2.4"
 
     },
     "require-dev": {

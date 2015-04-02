@@ -1,4 +1,4 @@
-<?php namespace RouterOsStumbler;
+<?php namespace RouterOsStumbler\Entity;
 
 class Routerboard {
 

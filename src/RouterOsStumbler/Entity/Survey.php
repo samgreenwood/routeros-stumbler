@@ -1,21 +1,29 @@
-<?php namespace RouterOsStumbler;
+<?php namespace RouterOsStumbler\Entity;
 
+use Doctrine\ORM\Mapping;
+
+/**
+ * @Entity
+ * @Table(name="surveys")
+ */
 class Survey
 {
     /**
-     * @var integer
+     * @Id
+     * @GeneratedValue
+     * @Column(type="integer")
      */
     protected $id;
 
     /**
-     * @var Site
+     * @Column(type="string")
      */
-    protected $site;
+    protected $name;
 
     /**
-     * @var \Datetime
+     * @Column(type="datetime")
      */
-    protected $date;
+    protected $surveyDate;
 
     /**
      * @var ScanResult[]
@@ -23,12 +31,12 @@ class Survey
     protected $scanResults = [];
 
     /**
-     * @param Site $site
+     * @param $name
      */
-    public function __construct(Site $site)
+    public function __construct($name)
     {
-        $this->site = $site;
-        $this->date = new \Datetime();
+        $this->name = $name;
+        $this->surveyDate = new \Datetime();
     }
 
     /**
@@ -66,14 +74,6 @@ class Survey
         });
 
         return array_pop($scansForSsid);
-    }
-
-    /**
-     * @return Site
-     */
-    public function getSite()
-    {
-        return $this->site;
     }
 
     /**

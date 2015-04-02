@@ -1,27 +1,56 @@
 <?php
 
-use RouterOsStumbler\Site;
+use RouterOsStumbler\Entity\Site;
+use RouterOsStumbler\Entity\Survey;
 
-$app->get('/', function () use ($app) {
+$app->get('/surveys', function () use ($app, $entityManager) {
 
-    $sites = [];
+    $survey = new Survey("Surveyname");
+    $entityManager->persist($survey);
+    $entityManager->flush();
 
-    $app->render('index.php', ['sites' => $sites]);
+    $surveys = $entityManager->getRepository(Survey::class)->findAll();
+
+    $app->render('surveys/index.php', ['surveys' => $surveys]);
 
 });
 
-$app->get('/scan/:siteId', function($siteName) use ($app)
+$app->post('/surveys', function() use($app, $entityManager)
 {
-    $site = new Site($siteName);
+    $request = $app->request();
+    $surveyName = $request->get('name');
+
+    $survey = new Survey($surveyName);
+    $entityManager->persist($survey);
+    $entityManager->flush();
+
+    return $app->redirectTo('/survey/:surveyId', [$site->getId()]);
+
+});
+
+$app->get('/survey/:surveyId', function($siteId) use ($app, $entityManager)
+{
+    $site = $entityManager->getRepository(Site::class)->find($siteId);
     $survey = new Survey($site);
+
+    $entityManager->persist($survey);
+    $entityManager->flush();
+
+    $_SESSION['surveyId'] = $survey->getId();
 
     return $app->render('scan.php', ['site' => $site, 'survey' => $survey]);
 });
 
-$app->get('/api/scan', function() use ($app, $routerboardScanResultReader)
+$app->get('/survey/:surveyId/scan', function($surveyId) use ($app, $routerboardScanResultReader, $entityManager)
 {
-
     $scanResults = $routerboardScanResultReader->read();
+
+    $survey = $entityManager->getRepository(Survey::class)->find($surveyId);
+
+    foreach($scanResults as $scanResult) $survey->addScan($scanResult);
+
+    $entityManager->persist($survey);
+    $entityManager->flush();
 
     $response = $app->response();
     $response->setBody(json_encode($scanResults));
