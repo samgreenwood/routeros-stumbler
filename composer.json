@@ -13,7 +13,7 @@
         }
     },
     "require": {
-        "php": ">=5.4",
+        "php": ">=5.5",
         "pear2/net_routeros": "dev-master",
         "symfony/yaml": "~2.6",
         "slim/slim": "~2.6",
