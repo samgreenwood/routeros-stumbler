@@ -1,8 +1,6 @@
-$(document).ready(function()
-{
-    function stumble() {
+function stumble(surveyId) {
 
-        var scanUrl = "/api/scan";
+        var scanUrl = "/surveys/" + surveyId + "/scan";
 
         $.getJSON(scanUrl, function (scans) {
             $.each(scans, function (index, scan) {
@@ -27,12 +25,11 @@ $(document).ready(function()
 
                     $('#scans-table tbody').append(html);
 
+                    $("#scans-table").tablesorter( {sortList: [[2,1]]} );
+
                 }
 
             });
 
         });
     }
-
-    setInterval(function(){ stumble(); }, 100);
-});

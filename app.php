@@ -2,9 +2,9 @@
 
 require 'vendor/autoload.php';
 
-use RouterOsStumbler\Entity\Routerboard;
 use Slim\Slim;
 use Symfony\Component\Yaml\Yaml;
+use RouterOsStumbler\Entity\Routerboard;
 
 require 'bootstrap/database.php';
 

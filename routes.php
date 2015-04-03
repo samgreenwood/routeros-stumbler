@@ -5,10 +5,6 @@ use RouterOsStumbler\Entity\Survey;
 
 $app->get('/surveys', function () use ($app, $entityManager) {
 
-    $survey = new Survey("Surveyname");
-    $entityManager->persist($survey);
-    $entityManager->flush();
-
     $surveys = $entityManager->getRepository(Survey::class)->findAll();
 
     $app->render('surveys/index.php', ['surveys' => $surveys]);
@@ -24,30 +20,24 @@ $app->post('/surveys', function() use($app, $entityManager)
     $entityManager->persist($survey);
     $entityManager->flush();
 
-    return $app->redirectTo('/survey/:surveyId', [$site->getId()]);
+    return $app->redirectTo('/surveys/:surveyId', [$site->getId()]);
 
 });
 
-$app->get('/survey/:surveyId', function($siteId) use ($app, $entityManager)
+$app->get('/surveys/:surveyId', function($surveyId) use ($app, $entityManager)
 {
-    $site = $entityManager->getRepository(Site::class)->find($siteId);
-    $survey = new Survey($site);
+    $survey = $entityManager->getRepository(Survey::class)->find($surveyId);
 
-    $entityManager->persist($survey);
-    $entityManager->flush();
-
-    $_SESSION['surveyId'] = $survey->getId();
-
-    return $app->render('scan.php', ['site' => $site, 'survey' => $survey]);
+    return $app->render('surveys/scan.php', ['survey' => $survey]);
 });
 
-$app->get('/survey/:surveyId/scan', function($surveyId) use ($app, $routerboardScanResultReader, $entityManager)
+$app->get('/surveys/:surveyId/scan', function($surveyId) use ($app, $routerboardScanResultReader, $entityManager)
 {
     $scanResults = $routerboardScanResultReader->read();
 
     $survey = $entityManager->getRepository(Survey::class)->find($surveyId);
 
-    foreach($scanResults as $scanResult) $survey->addScan($scanResult);
+    foreach($scanResults as $scanResult) $survey->addResult($scanResult);
 
     $entityManager->persist($survey);
     $entityManager->flush();
@@ -57,4 +47,13 @@ $app->get('/survey/:surveyId/scan', function($surveyId) use ($app, $routerboardS
 
     return $response;
 
+});
+
+$app->get('/surveys/:surveyId/results', function($surveyId) use ($app, $entityManager)
+{
+    $survey = $entityManager->getRepository(Survey::class)->find($surveyId);
+
+    $_SESSION['surveyId'] = $survey->getId();
+
+    return $app->render('results.php', ['survey' => $survey]);
 });

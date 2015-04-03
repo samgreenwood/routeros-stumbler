@@ -48,9 +48,9 @@
 
 <div class="container">
 
-    <div class="starter-template">
+    <div>
         <h1>Surveys</h1>
-        <table class="table table-bordered-table striped" id="scans-table">
+        <table class="table table-bordered" id="scans-table">
             <thead>
             <tr>
                 <th>Name</th>
@@ -62,7 +62,7 @@
             <?php foreach($surveys as $survey) { ?>
                 <tr>
                     <td><?=$survey->getName()?></td>
-                    <td><?=$survey->getDate()?></td>
+                    <td><?=$survey->getSurveyDate()->format('d/m/y h:i')?></td>
                     <td>
                         <a href="#" class="btn btn-success">View Results</a>
                         <a href="#" class="btn btn-danger">Delete</a>
@@ -76,6 +76,7 @@
 </div><!-- /.container -->
 
 <script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/jquery.tablesorter.min.js"></script>
 <script type="text/javascript" src="/js/handlebars.js"></script>
 
 </body>

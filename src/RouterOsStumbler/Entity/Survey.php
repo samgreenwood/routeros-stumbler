@@ -26,7 +26,7 @@ class Survey
     protected $surveyDate;
 
     /**
-     * @var ScanResult[]
+     * @OneToMany(targetEntity="RouterOsStumbler\Entity\ScanResult", mappedBy="survey", cascade={"persist"})
      */
     protected $scanResults = [];
 
@@ -45,6 +45,14 @@ class Survey
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
@@ -81,7 +89,7 @@ class Survey
      */
     public function getSurveyDate()
     {
-        return $this->date;
+        return $this->surveyDate;
     }
 
 }

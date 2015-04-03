@@ -6,10 +6,9 @@ use Doctrine\ORM\EntityManager;
 $paths = [__DIR__ . "/../src/RouterOsStumbler/Entity"];
 $isDevMode = false;
 
-// the connection configuration
 $dbParams = [
     'driver'   => 'pdo_sqlite',
-    'path'     => 'stumbler.sqlite'
+    'path'     => __DIR__ . '/../database.sqlite'
 ];
 
 $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);

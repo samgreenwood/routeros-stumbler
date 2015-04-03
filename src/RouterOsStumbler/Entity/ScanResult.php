@@ -26,18 +26,67 @@ class ScanResult implements \JsonSerializable
     protected $signalStrength;
 
     /**
-     * @OneToMany(targetEntity="RouterOsStumbler\Entity\Survey", mappedBy="survey")
+     * @Column(type="string", nullable=true)
+     */
+    protected $macAddress;
+
+    /**
+     * @Column(type="string", nullable=true)
+     */
+    protected $band;
+
+    /**
+     * @Column(type="string", nullable=true)
+     */
+    protected $frequency;
+
+    /**
+     * @Column(type="integer", nullable=true)
+     */
+    protected $channelWidth;
+
+    /**
+     * @Column(type="integer", nullable=true)
+     */
+    protected $noiseFloor;
+
+    /**
+     * @Column(type="integer", nullable=true)
+     */
+    protected $snr;
+
+    /**
+     * @Column(type="datetime", nullable=true)
+     */
+    protected $seen;
+
+    /**
+     * @ManyToOne(targetEntity="RouterOsStumbler\Entity\Survey", inversedBy="survey")
      */
     protected $survey;
 
     /**
      * @param $ssid
      * @param $signalStrength
+     * @param $macAddress
+     * @param $frequency
+     * @param $band
+     * @param $channelWidth
+     * @param $noiseFloor
+     * @param $snr
+     * @param $seen
      */
-    public function __construct($ssid, $signalStrength)
+    public function __construct($ssid, $signalStrength, $macAddress, $frequency, $band, $channelWidth, $noiseFloor, $snr)
     {
         $this->ssid = $ssid;
         $this->signalStrength = $signalStrength;
+        $this->macAddress = $macAddress;
+        $this->frequency = $frequency;
+        $this->band = $band;
+        $this->channelWidth = $channelWidth;
+        $this->noiseFloor = $noiseFloor;
+        $this->snr = $snr;
+        $this->seen = new \Datetime();
     }
 
     /**
@@ -79,7 +128,14 @@ class ScanResult implements \JsonSerializable
     {
        return [
            'ssid' => $this->ssid,
-           'signalStrength' => $this->signalStrength
+           'signalStrength' => $this->signalStrength,
+           'macAddress' => $this->macAddress,
+           'band' => $this->band,
+           'channelWidth' => $this->channelWidth,
+           'noiseFloor' => $this->noiseFloor,
+           'snr' => $this->snr,
+           'seen' => $this->seen->format(\DateTime::ISO8601),
+
        ];
     }
 }

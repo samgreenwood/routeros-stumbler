@@ -4,7 +4,7 @@ use PEAR2\Net\RouterOS;
 use RouterOsStumbler\Entity\Routerboard;
 use RouterOsStumbler\Entity\ScanResult;
 
-class RouterBoardScanResultReader
+class RouterBoardScanResultReader implements ScanResultReaderInterface
 {
     /**
      * @var Routerboard
@@ -36,7 +36,17 @@ class RouterBoardScanResultReader
 
         foreach($rawResults as $rawResult)
         {
-            $scanResult = new ScanResult($rawResult->getProperty('ssid'), $rawResult->getProperty('sig'));
+            $scanResult = new ScanResult(
+                $rawResult->getProperty('ssid'),
+                (int) $rawResult->getProperty('sig'),
+                $rawResult->getProperty('address'),
+                $rawResult->getProperty('freq'),
+                $rawResult->getProperty('band'),
+                (int) $rawResult->getProperty('channel-width'),
+                (int) $rawResult->getProperty('nf'),
+                (int) $rawResult->getProperty('snr')
+            );
+
             $scanResults[] = $scanResult;
         }
 

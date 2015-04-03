@@ -49,7 +49,7 @@
 <div class="container">
 
     <div class="starter-template">
-        <h1>Survey for <?=$site->getName()?></h1>
+        <h1>Survey: <?=$survey->getName()?></h1>
       <table class="table table-bordered-table striped" id="scans-table">
           <thead>
             <tr>
@@ -67,9 +67,17 @@
 </div><!-- /.container -->
 
 <script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/jquery.tablesorter.min.js"></script>
 <script type="text/javascript" src="/js/handlebars.js"></script>
 <script type="text/javascript" src="/js/scan.js"></script>
-
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        setInterval(function(){
+            stumble(<?=$survey->getId()?>)
+        }, 4000);
+    });
+</script>
 
 <script id="scan-row-template" type="text/x-handlebars-template">
     <tr id="{{ssid}}">
