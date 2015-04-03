@@ -134,7 +134,7 @@ class ScanResult implements \JsonSerializable
     {
        return [
            'ssid' => $this->ssid,
-           'ssid_slug' => S::slugify($this->ssid),
+           'ssidSlug' => S::slugify($this->ssid),
            'signalStrength' => $this->signalStrength,
            'macAddress' => $this->macAddress,
            'band' => $this->band,
