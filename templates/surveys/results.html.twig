@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Results for {{survey.name}} at {{ survey.date|date('d/m/Y h:i') }}</h1>
+    <table class="table table-bordered-table striped" id="scans-table">
+        <thead>
+        <tr>
+            <th>Site Name</th>
+            <th>Best Signal</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for ssid, signal in bestSignals %}
+                <tr>
+                    <td>{{ ssid }}</td>
+                    <td>{{ signal }}</td>
+                </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

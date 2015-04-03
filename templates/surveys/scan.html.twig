@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Survey: {{survey.name}}</h1>
+      <table class="table table-bordered-table striped" id="scans-table">
+          <thead>
+            <tr>
+                <th>Site Name</th>
+                <th>Best Signal</th>
+                <th>Mac Address</th>
+                <th>Channel Width</th>
+                <th>Noise Floor</th>
+                <th>SNR</th>
+                <th>Last Seen</th>
+                <th>Last Signal</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+      </table>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="/js/scan.js"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            setInterval(function(){
+                stumble({{ survey.id }})
+            }, 4000);
+        });
+    </script>
+
+    {% verbatim %}
+    <script id="scan-row-template" type="text/x-handlebars-template">
+        <tr id="{{ssidSlug}}">
+            <td>{{ssid}}</td>
+            <td class="best-signal">{{ signalStrength }}</td>
+            <td class="mac-address">{{ macAddress }}</td>
+            <td class="channel-width">{{ channelWidth }}mhz</td>
+            <td class="noise-floor">{{ noiseFloor }}</td>
+            <td class="snr">{{ snr }}</td>
+            <td class="last-seen">{{ seen }}</td>
+            <td class="last-signal">{{ signalStrength }}</td>
+        </tr>
+    </script>
+
+    {% endverbatim %}
+
+{% endblock %}

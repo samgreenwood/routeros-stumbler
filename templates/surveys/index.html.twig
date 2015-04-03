@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-4">
+          <h1>Surveys</h1>
+        </div>
+        <div class="col-md-offset-4 col-md-4">
+            <h1>
+            <form action="/surveys" class="form-inline pull-right" method="POST">
+                <div class="form-group">
+            <input type="text" name="survey_name" class="form-control inline" required />
+                </div>
+                <div class="form-group">
+            <input type="submit" value="Create Survey" class="btn btn-primary" />
+                </div>
+            </form>
+            </h1>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered" id="scans-table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Survey Date</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for survey in surveys %}
+                    <tr>
+                        <td>{{ survey.name }}</td>
+                        <td>{{ survey.date|date('d/m/Y h:i') }}</td>
+                        <td>
+                            <a href="/surveys/{{ survey.id }}/results" class="btn btn-success">View Results</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}

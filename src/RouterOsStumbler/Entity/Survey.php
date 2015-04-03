@@ -61,6 +61,7 @@ class Survey
     public function addResult(ScanResult $scanResult)
     {
         $this->scanResults[] = $scanResult;
+        $scanResult->setSurvey($this);
     }
 
     /**
@@ -69,6 +70,8 @@ class Survey
      */
     public function getBestScanResultForSsid($ssid)
     {
+        if(!is_array($this->scanResults)) $this->scanResults = $this->scanResults->toArray();
+
         $scansForSsid = array_filter($this->scanResults, function(ScanResult $scanResult) use ($ssid) {
             return $ssid == $scanResult->getSsid();
         });
@@ -90,6 +93,21 @@ class Survey
     public function getSurveyDate()
     {
         return $this->surveyDate;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSsidsScanned()
+    {
+        $ssids = [];
+
+        foreach($this->scanResults as $scanResult)
+        {
+            $ssids[] = $scanResult->getSsid();
+        }
+
+        return array_unique($ssids);
     }
 
 }

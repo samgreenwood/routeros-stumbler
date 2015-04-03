@@ -20,7 +20,10 @@ $routerboardScanResultReader = new RouterOsStumbler\Services\RouterBoardScanResu
 session_cache_limiter(false);
 session_start();
 
-$app = new Slim(['templates.path' => '../templates']);
+$app = new Slim([
+    'templates.path' => '../templates',
+    'view' => new \Slim\Views\Twig(),
+]);
 
 require 'routes.php';
 

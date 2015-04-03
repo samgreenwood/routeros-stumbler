@@ -1,6 +1,7 @@
 <?php namespace RouterOsStumbler\Entity;
 
 use Doctrine\ORM\Mapping;
+use Stringy\StaticStringy as S;
 
 /**
  * @Entity
@@ -105,6 +106,11 @@ class ScanResult implements \JsonSerializable
         return $this->survey;
     }
 
+    public function setSurvey(Survey $survey)
+    {
+        $this->survey = $survey;
+    }
+
     /**
      * @return string
      */
@@ -128,6 +134,7 @@ class ScanResult implements \JsonSerializable
     {
        return [
            'ssid' => $this->ssid,
+           'ssid_slug' => S::slugify($this->ssid),
            'signalStrength' => $this->signalStrength,
            'macAddress' => $this->macAddress,
            'band' => $this->band,

@@ -4,7 +4,7 @@ function stumble(surveyId) {
 
         $.getJSON(scanUrl, function (scans) {
             $.each(scans, function (index, scan) {
-                var rowId = scan.ssid;
+                var rowId = scan.ssidSlug;
                 var row = $('#' + rowId);
 
                 if (row.length) {
@@ -16,19 +16,22 @@ function stumble(surveyId) {
                     }
 
                     row.children('.last-signal').text(lastSignal);
+                    row.children('.noise-floor').text(scan.noiseFloor);
+                    row.children('.snr').text(scan.snr);
+                    row.children('.last-seen').text(scan.seen);
+
                 }
                 else {
                     var source = $("#scan-row-template").html();
                     var template = Handlebars.compile(source);
-                    var context = {ssid: scan.ssid, signal: scan.signalStrength};
+                    var context = scan;
                     var html = template(context);
 
                     $('#scans-table tbody').append(html);
 
-                    $("#scans-table").tablesorter( {sortList: [[2,1]]} );
-
                 }
 
+                $("#scans-table").tablesorter( {sortList: [[1,1]]} );
             });
 
         });

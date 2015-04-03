@@ -1,4 +1,4 @@
 config:
-  host: hostname
-  username: username
-  password: password
+  host: bdr1.gulfviewheights.wan
+  username: dragoonapi
+  password: dragoonapi
