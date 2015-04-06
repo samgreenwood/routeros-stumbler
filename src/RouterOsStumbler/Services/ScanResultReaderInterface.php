@@ -3,8 +3,7 @@
 interface ScanResultReaderInterface
 {
     /**
-     * Read the results from the device.
-     * Return an array of ScanResults with the data.
+     * Read the results from a data source.
      *
      * @return ScanResult[]
      */
