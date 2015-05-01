@@ -4,18 +4,25 @@ require 'vendor/autoload.php';
 
 use Slim\Slim;
 use Symfony\Component\Yaml\Yaml;
+use RouterOsStumbler\Entity\Ubiquiti;
 use RouterOsStumbler\Entity\Routerboard;
 
 require 'bootstrap/database.php';
 
-$rbConfig = Yaml::parse(file_get_contents(__DIR__ . '/config/routerboard.yml'));
+$deviceConfig = Yaml::parse(file_get_contents(__DIR__ . '/config/devices.yml'));
 
-$rbHost = $rbConfig['config']['host'];
-$rbUser = $rbConfig['config']['username'];
-$rbPassword = $rbConfig['config']['password'];
+$devices = [];
 
-$routerboard = new Routerboard($rbHost, $rbUser, $rbPassword);
-$routerboardScanResultReader = new RouterOsStumbler\Services\RouterBoardScanResultReader($routerboard);
+foreach ($deviceConfig['devices'] as $device) {
+    switch ($device['type']) {
+        case routerboard:
+            $devices[$device['name']] = new Routerboard($device['name'], $device['host'], $device['username'], $device['password']);
+            break;
+        case ubiquiti:
+            $devices[$device['name']] = new Ubiquiti($device['name'], $device['host'], $device['username'], $device['password']);
+            break;
+    }
+}
 
 session_cache_limiter(false);
 session_start();

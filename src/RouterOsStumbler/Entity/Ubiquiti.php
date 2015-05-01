@@ -1,6 +1,6 @@
 <?php namespace RouterOsStumbler\Entity;
 
-class Routerboard {
+class Ubiquiti {
 
     /**
      * @var string
@@ -23,28 +23,20 @@ class Routerboard {
     private $password;
 
     /**
-     * @var string
-     */
-    private $scanInterface;
-
-    /**
-     * @param string $name
      * @param string $host
      * @param string $username
      * @param string $password
-     * @param string $scanInterface
      */
-    public function __construct($name, $host, $username, $password, $scanInterface = "wlan0")
+    public function __construct($name, $host, $username, $password)
     {
         $this->name = $name;
         $this->host = $host;
         $this->username = $username;
         $this->password = $password;
-        $this->scanInterface = $scanInterface;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getName()
     {
@@ -74,13 +66,4 @@ class Routerboard {
     {
         return $this->password;
     }
-
-    /**
-     * @return string
-     */
-        public function getScanInterface()
-    {
-        return $this->scanInterface;
-    }
-
-} 
+}

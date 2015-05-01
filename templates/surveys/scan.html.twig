@@ -30,9 +30,12 @@
     <script type="text/javascript">
         $(document).ready(function()
         {
-            setInterval(function(){
-                stumble({{ survey.id }})
-            }, 4000);
+            {% for device in devices %}
+                setInterval(function(){
+                    stumble({{ survey.id }}, {{ device }})
+                }, 4000);
+            {% endfor %}
+
         });
     </script>
 

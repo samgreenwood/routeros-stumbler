@@ -3,11 +3,11 @@
 use RouterOsStumbler\Entity\Site;
 use RouterOsStumbler\Entity\Survey;
 
-$app->get('/surveys', function () use ($app, $entityManager) {
+$app->get('/surveys', function () use ($app, $entityManager, $devices) {
 
     $surveys = $entityManager->getRepository(Survey::class)->findAll();
 
-    $app->render('surveys/index.html.twig', ['surveys' => $surveys]);
+    $app->render('surveys/index.html.twig', ['surveys' => $surveys, 'devices' => array_keys($devices)]);
 
 });
 
@@ -15,8 +15,7 @@ $app->get('/surveys/create', function () use ($app) {
     $app->render('surveys/create.html.twig');
 });
 
-$app->post('/surveys', function() use($app, $entityManager)
-{
+$app->post('/surveys', function () use ($app, $entityManager) {
     $request = $app->request();
     $surveyName = $request->post('survey_name');
 
@@ -27,39 +26,47 @@ $app->post('/surveys', function() use($app, $entityManager)
     return $app->redirect('/surveys/' . $survey->getId());
 });
 
-$app->get('/surveys/:surveyId', function($surveyId) use ($app, $entityManager)
-{
+$app->get('/surveys/:surveyId', function ($surveyId) use ($app, $entityManager) {
     $survey = $entityManager->getRepository(Survey::class)->find($surveyId);
 
-    return $app->render('surveys/scan.html.twig', ['survey' => $survey]);
+    $devices = $app->request()->get('devices');
+
+    return $app->render('surveys/scan.html.twig', ['survey' => $survey, 'devices' => $devices]);
 });
 
-$app->get('/surveys/:surveyId/scan', function($surveyId) use ($app, $routerboardScanResultReader, $entityManager)
-{
-    $scanResults = $routerboardScanResultReader->read();
+$app->get('/surveys/:surveyId/scan/:deviceName', function ($surveyId, $deviceName) use ($app, $entityManager, $devices) {
 
-    $survey = $entityManager->getRepository(Survey::class)->find($surveyId);
+    $device = $devices[$deviceName];
 
-    foreach($scanResults as $scanResult) $survey->addResult($scanResult);
+    if ( ! $device) {
+        throw new Exception('Device not found');
+    } else {
+        if ($device instanceof \RouterOsStumbler\Entity\Routerboard) {
+            $reader = new \RouterOsStumbler\Services\RouterBoardScanResultReader($device);
+            $scanResults = $reader->read();
+        }
 
-    $entityManager->persist($survey);
-    $entityManager->flush();
+        $survey = $entityManager->getRepository(Survey::class)->find($surveyId);
 
-    $response = $app->response();
-    $response->setBody(json_encode($scanResults));
+        foreach ($scanResults as $scanResult) $survey->addResult($scanResult);
 
-    return $response;
+        $entityManager->persist($survey);
+        $entityManager->flush();
 
+        $response = $app->response();
+        $response->setBody(json_encode($scanResults));
+
+        return $response;
+    }
 });
 
-$app->get('/surveys/:surveyId/results', function($surveyId) use ($app, $entityManager)
-{
+$app->get('/surveys/:surveyId/results', function ($surveyId) use ($app, $entityManager) {
     $survey = $entityManager->getRepository(Survey::class)->find($surveyId);
     $ssids = $survey->getSsidsScanned();
 
     $bestSignals = [];
 
-    foreach($ssids as $ssid) {
+    foreach ($ssids as $ssid) {
         $bestSignals[$ssid] = $survey->getBestScanResultForSsid($ssid)->getSignalStrength();
     }
 
