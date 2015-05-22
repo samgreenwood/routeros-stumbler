@@ -4,18 +4,23 @@
 
     <div class="row">
         <div class="col-md-4">
-          <h1>Surveys</h1>
+            <h1>Surveys</h1>
         </div>
-        <div class="col-md-offset-4 col-md-4">
+        <div class="col-md-offset-2 col-md-6">
             <h1>
-            <form action="/surveys" class="form-inline pull-right" method="POST">
-                <div class="form-group">
-            <input type="text" name="survey_name" class="form-control inline" required />
-                </div>
-                <div class="form-group">
-            <input type="submit" value="Create Survey" class="btn btn-primary" />
-                </div>
-            </form>
+                <form action="/surveys" class="form-inline pull-right" method="POST">
+                    <div class="form-group">
+                        <input type="text" name="survey_name" class="form-control inline" required/>
+                    </div>
+                    <select name="devices" id="devices" class="form-control" required multiple>
+                        {% for device in devices %}
+                            <option value="{{ device }}">{{ device }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="form-group">
+                        <input type="submit" value="Create Survey" class="btn btn-primary"/>
+                    </div>
+                </form>
             </h1>
 
         </div>
@@ -46,5 +51,16 @@
         </div>
     </div>
 
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#devices').select2();
+        });
+    </script>
 
 {% endblock %}

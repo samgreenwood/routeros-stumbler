@@ -1,6 +1,6 @@
-function stumble(surveyId) {
+function stumble(surveyId, device) {
 
-        var scanUrl = "/surveys/" + surveyId + "/scan";
+        var scanUrl = "/surveys/" + surveyId + "/scan/" + device;
 
         $.getJSON(scanUrl, function (scans) {
             $.each(scans, function (index, scan) {
