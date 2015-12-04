@@ -2,6 +2,13 @@
 
 use RouterOsStumbler\Entity\Site;
 use RouterOsStumbler\Entity\Survey;
+use RouterOsStumbler\Services\UbiquitiScanResultParser;
+use RouterOsStumbler\Services\UbiquitiScanResultReader;
+
+$app->get('/', function() use ($app)
+{
+    return $app->redirect('/surveys');
+});
 
 $app->get('/surveys', function () use ($app, $entityManager, $devices) {
 
@@ -31,6 +38,8 @@ $app->get('/surveys/:surveyId', function ($surveyId) use ($app, $entityManager) 
 
     $devices = $app->request()->get('devices');
 
+    $devices = (array) $devices;
+
     return $app->render('surveys/scan.html.twig', ['survey' => $survey, 'devices' => $devices]);
 });
 
@@ -43,8 +52,13 @@ $app->get('/surveys/:surveyId/scan/:deviceName', function ($surveyId, $deviceNam
     } else {
         if ($device instanceof \RouterOsStumbler\Entity\Routerboard) {
             $reader = new \RouterOsStumbler\Services\RouterBoardScanResultReader($device);
-            $scanResults = $reader->read();
         }
+
+        if($device instanceof \RouterOsStumbler\Entity\Ubiquiti) {
+            $reader = new UbiquitiScanResultReader(new UbiquitiScanResultParser());
+        }
+
+        $scanResults = $reader->read($device);
 
         $survey = $entityManager->getRepository(Survey::class)->find($surveyId);
 

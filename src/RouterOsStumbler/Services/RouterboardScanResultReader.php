@@ -4,29 +4,17 @@ use PEAR2\Net\RouterOS;
 use RouterOsStumbler\Entity\Routerboard;
 use RouterOsStumbler\Entity\ScanResult;
 
-class RouterBoardScanResultReader implements ScanResultReaderInterface
+class RouterBoardScanResultReader
 {
     /**
-     * @var Routerboard
-     */
-    protected $routerboard;
-
-    /**
      * @param Routerboard $routerboard
+     * @return \RouterOsStumbler\Entity\ScanResult[]
      */
-    public function __construct(Routerboard $routerboard)
-    {
-        $this->routerboard = $routerboard;
-    }
-
-    /**
-     * @return ScanResult[]
-     */
-    public function read()
+    public function read(Routerboard $routerboard)
     {
         $scanResults = [];
 
-        $client = new RouterOS\Client($this->routerboard->getHost(), $this->routerboard->getUsername(), $this->routerboard->getPassword());
+        $client = new RouterOS\Client($routerboard->getHost(), $routerboard->getUsername(), $routerboard->getPassword());
 
         $scanRequest = new RouterOS\Request("/interface wireless scan");
         $scanRequest->setArgument("number", $this->routerboard->getScanInterface());

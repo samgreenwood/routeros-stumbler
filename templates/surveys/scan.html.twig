@@ -32,7 +32,7 @@
         {
             {% for device in devices %}
                 setInterval(function(){
-                    stumble({{ survey.id }}, {{ device }})
+                    stumble({{ survey.id }}, '{{ device }}')
                 }, 4000);
             {% endfor %}
 

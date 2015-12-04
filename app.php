@@ -15,10 +15,10 @@ $devices = [];
 
 foreach ($deviceConfig['devices'] as $device) {
     switch ($device['type']) {
-        case routerboard:
+        case 'routerboard':
             $devices[$device['name']] = new Routerboard($device['name'], $device['host'], $device['username'], $device['password']);
             break;
-        case ubiquiti:
+        case 'ubiquiti':
             $devices[$device['name']] = new Ubiquiti($device['name'], $device['host'], $device['username'], $device['password']);
             break;
     }

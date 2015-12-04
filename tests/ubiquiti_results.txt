@@ -1,0 +1,43 @@
+ath0      Scan in progress :
+          Cell 01 - Address: 64:70:02:AA:A0:86
+                    ESSID:"Goonwood"
+                    Mode:Master
+                    Frequency:5.785 GHz (Channel 157)
+                    Quality=60/94  Signal level=-36 dBm  Noise level=-92 dBm
+                    Encryption key:on
+                    Bit Rates:6 Mb/s; 9 Mb/s; 12 Mb/s; 18 Mb/s; 24 Mb/s
+                              36 Mb/s; 48 Mb/s; 54 Mb/s
+                    Extra:bcn_int=100
+                    IE: IEEE 802.11i/WPA2 Version 1
+                        Group Cipher : TKIP
+                        Pairwise Ciphers (2) : CCMP TKIP
+                        Authentication Suites (1) : PSK
+                    IE: WPA Version 1
+                        Group Cipher : TKIP
+                        Pairwise Ciphers (2) : CCMP TKIP
+                        Authentication Suites (1) : PSK
+                    Extra:wme_ie=dd180050f2020101000003a4000027a4000042435e0062322f00
+                    Extra:ieee_mode=802.11n
+                    Extra:center1=5785 Mhz
+                    Extra:chanbw=20 Mhz
+          Cell 02 - Address: 64:70:02:AA:A0:86
+                    ESSID:"Testwood"
+                    Mode:Master
+                    Frequency:5.180 GHz (Channel 157)
+                    Quality=60/94  Signal level=-96 dBm  Noise level=-92 dBm
+                    Encryption key:on
+                    Bit Rates:6 Mb/s; 9 Mb/s; 12 Mb/s; 18 Mb/s; 24 Mb/s
+                              36 Mb/s; 48 Mb/s; 54 Mb/s
+                    Extra:bcn_int=100
+                    IE: IEEE 802.11i/WPA2 Version 1
+                        Group Cipher : TKIP
+                        Pairwise Ciphers (2) : CCMP TKIP
+                        Authentication Suites (1) : PSK
+                    IE: WPA Version 1
+                        Group Cipher : TKIP
+                        Pairwise Ciphers (2) : CCMP TKIP
+                        Authentication Suites (1) : PSK
+                    Extra:wme_ie=dd180050f2020101000003a4000027a4000042435e0062322f00
+                    Extra:ieee_mode=802.11n
+                    Extra:center1=5785 Mhz
+                    Extra:chanbw=20 Mhz

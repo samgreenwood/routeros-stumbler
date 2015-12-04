@@ -77,7 +77,7 @@ class ScanResult implements \JsonSerializable
      * @param $snr
      * @param $seen
      */
-    public function __construct($ssid, $signalStrength, $macAddress, $frequency, $band, $channelWidth, $noiseFloor, $snr)
+    public function __construct($ssid, $signalStrength, $macAddress = null, $frequency = null, $band = null, $channelWidth = null, $noiseFloor = null, $snr = null)
     {
         $this->ssid = $ssid;
         $this->signalStrength = $signalStrength;
@@ -88,6 +88,16 @@ class ScanResult implements \JsonSerializable
         $this->noiseFloor = $noiseFloor;
         $this->snr = $snr;
         $this->seen = new \Datetime();
+    }
+
+    /**
+     * @param $data
+     * @return static
+     */
+    public static function fromArray($data)
+    {
+        extract($data);
+        return new static($ssid, $signalStrength, $macAddress, $frequency, $band, $channelWidth, $noiseFloor, $snr);
     }
 
     /**
