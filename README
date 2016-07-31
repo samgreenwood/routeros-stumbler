@@ -1,0 +1,17 @@
+We need a README, in the meantime some random notes on installation process
+
+needs php 5.5+
+
+git clone https://github.com/samgreenwood/routeros-stumbler
+
+cd routeros-stumbler
+mv * /var/www/html
+
+composer install
+
+Create empty database:
+./vendor/bin/doctrine orm:schema-tool:create
+
+Change apache Webroot to to web/
+
+edit config/devices.xml
