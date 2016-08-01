@@ -1,24 +1,58 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h1>Survey: {{survey.name}}</h1>
+<style type="text/css">
+table{
+        width: 50%;
+    }
+
+    @media only screen and (max-width: 900px) {
+        .one{
+            display: none;
+        }
+    }
+
+</style>
+
+<h4>Survey: {{survey.name}}</h4>
+<br class="one">
+<h4>Air-Stream SSIDs:</h4>
       <table class="table table-bordered-table striped" id="scans-table">
           <thead>
             <tr>
                 <th>Site Name</th>
                 <th>Best Signal</th>
-                <th>Mac Address</th>
-                <th>Channel Width</th>
-                <th>Noise Floor</th>
-                <th>SNR</th>
-                <th>Last Seen</th>
                 <th>Last Signal</th>
+                <th class="one">Mac Address</th>
+                <th class="one">Channel Width</th>
+                <th class="one"> Noise Floor</th>
+                <th>SNR</th>
+                <th class="one">Last Seen</th>
             </tr>
           </thead>
           <tbody>
 
           </tbody>
       </table>
+<h4>Other SSIDs:</h4>
+      <table class="table table-bordered-table striped" id="scans2-table">
+          <thead>
+            <tr>
+                <th>Site Name</th>
+                <th>Best Signal</th>
+                <th>Last Signal</th>
+                <th class="one">Mac Address</th>
+                <th class="one">Channel Width</th>
+                <th class="one">Noise Floor</th>
+                <th>SNR</th>
+                <th class="one">Last Seen</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+      </table>
+
 {% endblock %}
 
 {% block javascripts %}
@@ -30,11 +64,9 @@
     <script type="text/javascript">
         $(document).ready(function()
         {
-            {% for device in devices %}
                 setInterval(function(){
-                    stumble({{ survey.id }}, '{{ device }}')
-                }, 4000);
-            {% endfor %}
+                    stumble({{ survey.id }}, "ubiquiti")
+                }, 3000);
 
         });
     </script>
@@ -44,12 +76,25 @@
         <tr id="{{ssidSlug}}">
             <td>{{ssid}}</td>
             <td class="best-signal">{{ signalStrength }}</td>
-            <td class="mac-address">{{ macAddress }}</td>
-            <td class="channel-width">{{ channelWidth }}mhz</td>
-            <td class="noise-floor">{{ noiseFloor }}</td>
-            <td class="snr">{{ snr }}</td>
-            <td class="last-seen">{{ seen }}</td>
             <td class="last-signal">{{ signalStrength }}</td>
+            <td class="one mac-address">{{ macAddress }}</td>
+            <td class="one channel-width">{{ channelWidth }}</td>
+            <td class="one noise-floor">{{ noiseFloor }}</td>
+            <td class="snr">{{ snr }}</td>
+            <td class="one last-seen">{{ seen }}</td>
+        </tr>
+    </script>
+
+    <script id="scan2-row-template" type="text/x-handlebars-template">
+        <tr id="{{ssidSlug}}">
+            <td>{{ssid}}</td>
+            <td class="best-signal">{{ signalStrength }}</td>
+            <td class="last-signal">{{ signalStrength }}</td>
+            <td class="one mac-address">{{ macAddress }}</td>
+            <td class="one channel-width">{{ channelWidth }}</td>
+            <td class="one noise-floor">{{ noiseFloor }}</td>
+            <td class="snr">{{ snr }}</td>
+            <td class="one last-seen">{{ seen }}</td>
         </tr>
     </script>
 

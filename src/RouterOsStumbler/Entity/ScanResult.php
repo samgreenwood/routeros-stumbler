@@ -151,8 +151,7 @@ class ScanResult implements \JsonSerializable
            'channelWidth' => $this->channelWidth,
            'noiseFloor' => $this->noiseFloor,
            'snr' => $this->snr,
-           'seen' => $this->seen->format(\DateTime::ISO8601),
-
+	   'seen' => \Carbon\Carbon::instance($this->seen)->diffInSeconds(\Carbon\Carbon::now()),
        ];
     }
 }
