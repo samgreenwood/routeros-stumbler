@@ -57,7 +57,7 @@ class ScanResult implements \JsonSerializable
     protected $snr;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @Column(type="datetime", nullable=true)
      */
     protected $seen;
 
@@ -87,7 +87,7 @@ class ScanResult implements \JsonSerializable
         $this->channelWidth = $channelWidth;
         $this->noiseFloor = $noiseFloor;
         $this->snr = $snr;
-        $this->seen = date("i:s");
+        $this->seen = new \Datetime();
     }
 
     /**
@@ -151,8 +151,7 @@ class ScanResult implements \JsonSerializable
            'channelWidth' => $this->channelWidth,
            'noiseFloor' => $this->noiseFloor,
            'snr' => $this->snr,
-           'seen' => $this->seen,
-
+	   'seen' => \Carbon\Carbon::instance($this->seen)->diffInSeconds(\Carbon\Carbon::now()),
        ];
     }
 }
